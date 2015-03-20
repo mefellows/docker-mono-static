@@ -40,17 +40,26 @@ FROM mfellows/mono-static
 MAINTAINER Matt Fellows <matt.fellows@onegeek.com.au>
 
 ONBUILD WORKDIR /usr/src/app/build
-CMD [ "echo", "build completed!" ]
+CMD [ "sleep", "600" ]
 ```
 
 This will produce a container with a compiled binary in the `/usr/src/app/build` directory with the name `consoleapp`.
 Extract the binary from the container for embedding into a smaller runtime container, such as busybox:
 
 ```
-docker build -t tmp-build .                                         # Run the CI build
-docker run -d --name tmp-build tmp-build                            # Run the 'ci' container and get the artifact
-docker cp tmp-build:/usr/src/app/source/packages .                  # This is a sort of package caching mechanism
-docker cp tmp-build:/usr/src/app/source/consoleapp ./distribution/  # Put static binary with distribution container build
+# Run the CI Build
+docker build -t tmp-build .                                       
+
+# Run the container
+docker run -d --name tmp-build tmp-build                          
+
+# This is sort of a package caching mechanism
+docker cp tmp-build:/usr/src/app/source/packages .                
+
+# Extract static binary into distribution folder
+docker cp tmp-build:/usr/src/app/source/consoleapp ./distribution/
+
+# Close off temporary container
 docker rm -f tmp-build
 ```
 
