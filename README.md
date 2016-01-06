@@ -35,7 +35,7 @@ Assuming you have the `build-app.sh` from above in the root dir, you can now bui
 Dockerfile
 
 ```
-FROM mfellows/mono-static
+FROM mefellows/mono-static
 
 MAINTAINER Matt Fellows <matt.fellows@onegeek.com.au>
 
@@ -72,7 +72,7 @@ ADD ./consoleapp console
 CMD [ "./console" ]
 ```
 
-You can build this with `docker build -t mfellows/mono-api distribution`
+You can build this with `docker build -t mefellows/mono-api distribution`
 
 ## Tutorial
 
